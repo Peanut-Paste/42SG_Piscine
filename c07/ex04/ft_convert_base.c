@@ -6,7 +6,7 @@
 /*   By: jingtan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 13:25:06 by jingtan           #+#    #+#             */
-/*   Updated: 2023/07/11 17:26:18 by jingtan          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:49:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,33 @@ int	get_int(char letter, char *base)
 	return (-1);
 }
 
-char	*convert_to_base_to(int nbr, char *base_to)
+char	*convert_to_base_to(int nbr, char *base_to, int is_neg)
 {
 	char	*new_str;
 	int		i;
 	int		counter;
 
 	i = nbr;
-	counter = get_new_size(nbr, base_to);
-	new_str = malloc(sizeof(char) * counter);
+	if (is_neg < 0)
+		counter = get_new_size(nbr, base_to) + 1;
+	else
+		counter = get_new_size(nbr, base_to);
+	new_str = malloc(sizeof(char) * (counter + 1));
 	if (!new_str)
 		return (0);
-	while ((counter - 1) >= 0)
-	{	
+	new_str[counter] = '\0';
+	if (is_neg < 0)
+		new_str[0] = '-';
+	while ((counter - 1) >= 0 && new_str[counter - 1] != '-')
+	{
 		new_str[counter - 1] = base_to[i % check_base(base_to)];
 		i /= check_base(base_to);
 		counter--;
 	}
-	new_str[get_new_size(nbr, base_to)] = '\0';
 	return (new_str);
 }
 
-char	*get_result(char *str, char *base_from, char *base_to)
+char	*get_result(char *str, char *base_from, char *base_to, int is_neg)
 {
 	int		total;
 
@@ -62,7 +67,7 @@ char	*get_result(char *str, char *base_from, char *base_to)
 		total = (total * check_base(base_from) + get_int(*str, base_from));
 		str++;
 	}
-	return (convert_to_base_to(total, base_to));
+	return (convert_to_base_to(total, base_to, is_neg));
 }
 
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
@@ -83,16 +88,10 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 				is_negative *= -1;
 			i++;
 		}
-		result = get_result(&nbr[i], base_from, base_to);
+		result = get_result(&nbr[i], base_from, base_to, is_negative);
 		if (result != 0)
 			return (result);
 		free(result);
 	}
-	return (0);
-}
-
-int	main(void)
-{
-	printf("%s\n", ft_convert_base("     ----7F", "0123456789ABCDEF", "01"));
 	return (0);
 }

@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_map.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jingtan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/04 06:28:30 by jingtan           #+#    #+#             */
-/*   Updated: 2023/07/17 12:02:23 by marvin           ###   ########.fr       */
+/*   Created: 2023/07/18 18:35:10 by marvin            #+#    #+#             */
+/*   Updated: 2023/07/18 19:09:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+int	*ft_map(int *tab, int length, int (*f)(int))
 {
-	int	c;
-	int	*array;
+	int	*new_array;
 	int	i;
 
-	if (min >= max)
-	{
-		*range = 0;
+	new_array = malloc(sizeof(int) * length);
+	if (!new_array)
 		return (0);
-	}
-	c = max - min;
-	array = malloc(sizeof(int) * c);
-	if (!array)
-		return (-1);
 	i = 0;
-	while (i < c)
+	while (i < length)
 	{
-		array[i] = min;
-		min++;
+		(*f)(tab[i]);
+		new_array[i] = tab[i];
 		i++;
 	}
-	*range = array;
-	return (c);
+	return (new_array);
 }

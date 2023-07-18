@@ -6,12 +6,11 @@
 /*   By: jingtan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 10:29:34 by jingtan           #+#    #+#             */
-/*   Updated: 2023/07/09 20:45:50 by jingtan          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:02:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 int	get_total_size(int size, char **strs, char *sep)
 {
@@ -85,30 +84,4 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	new_string[0] = '\0';
 	brain(new_string, strs, sep, size);
 	return (new_string);
-}
-
-int	main(void)
-{
-	char	**a;
-	char	*b;
-	char 	*a1;
-	char	*a2;
-	char	*a3;
-	char	*a4;
-	char	*a5;
-
-	a1 = "hello";
-       	a2 = "moshi";
-	a3 = "mos"; 
-	a4 = "this"; 
-	a5 = "suck";
-	a = malloc(sizeof(char *) * 5);
-	a[0] = a1;
-	a[1] = a2;
-	a[2] = a3;
-	a[3] = a4;
-	a[4] = a5;
-	b = " ! ";
-	printf("%s\n", ft_strjoin(7, a, b));
-	return (0);
 }
